@@ -6,4 +6,4 @@ class Employee:
         self.out_work = out_work
         self.in_work = in_work
         self.employer_full_name = employer_full_name
-        self._ = id_
+        self.id_ = id_
