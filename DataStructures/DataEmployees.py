@@ -30,5 +30,4 @@ Employees = [
 
     {"id": 10, "employer_full_name": "Савельев Парамон Дмитриевич", "in_work": datetime.date(2015, 12, 14),
      "out_work": None, "bonus_code": [1, 4], "base_salary": 30000},
-
 ]

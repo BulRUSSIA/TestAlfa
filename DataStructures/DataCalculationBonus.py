@@ -1,4 +1,4 @@
-Bonus = [
+Bonuses = [
     {
         "id": 1, "bonus_percent": 5
     },
@@ -15,7 +15,4 @@ Bonus = [
         "id": 4, "bonus_percent": 2
 
     }
-
-
-
 ]
