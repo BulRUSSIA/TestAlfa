@@ -4,6 +4,6 @@ from Logic.AppendDataToModel import AppendBonuses, AppendContracts, AppendEmploy
 class LocalData:
 
     def __init__(self):
-        self.bonuses = AppendBonuses()  # Вызываем метод заполнения Бонусы
-        self.contracts = AppendContracts()  # Вызываем метод заполнения Договоров
-        self.employees = AppendEmployees()  # Вызываем метод заполнения Сотрудников
+        self.bonuses = AppendBonuses().instance_list  # Вызываем метод заполнения Бонусы
+        self.contracts = AppendContracts().instance_list  # Вызываем метод заполнения Договоров
+        self.employees = AppendEmployees().instance_list  # Вызываем метод заполнения Сотрудников
