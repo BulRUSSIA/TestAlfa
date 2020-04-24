@@ -40,4 +40,5 @@ from Models.LocalData import LocalData
 #             if bonus['id'] == code:  # Если есть совпдаения с бонусом сотрудника вывести весь объект бонуса
 #                 bonus_instance = Bonus(bonus['id'], bonus['bonus_percent'])  # создаем экземпляр класса Bonus
 local = LocalData()
-print(local.bonuses)
+print(local.bonuses.instance_list)
+print(local.employees.instance_list[0].bonus_code)
