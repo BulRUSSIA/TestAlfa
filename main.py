@@ -1,44 +1,26 @@
 # TODO 1)на вход подается формат вывода(консоль,файл) и любая дата(период расчета бонусов)
 # TODO 2)все бонусы суммируются между собой
 # TODO 3)алгоритм расчета бонусов для сотрудника
-from DataStructures.DataCalculationBonus import Bonuses
-from DataStructures.DataContracts import Contracts
-from DataStructures.DataEmployees import Employees
-from Models.Employee import Employee
-from Models.Bonus import Bonus
-from Models.Contract import Contract
 from Models.LocalData import LocalData
-# em = list(map(lambda data_field: Employee(data_field['id'], data_field['employer_full_name'], data_field['in_work'],
-#                                           data_field['out_work'],
-#                                           data_field['bonus_code'], data_field['base_salary']), Employees))
-from Models.LocalData import LocalData
+import datetime
 
-# data_field = Employees[0]
-# """Сотрудник под номером 1"""
-# db_data = LocalData()
-# db_data.bonuses
-# employee_one = Employee(data_field['id'], data_field['employer_full_name'], data_field['in_work'],
-#                         data_field['out_work'],
-#                         data_field['bonus_code'], data_field['base_salary'])
-# print(employee_one.employer_full_name)
-# """Бонусы сотрудника 1"""
-# print('Бонусы сотрудника', employee_one.bonus_code)
-# print('Устроился на работу', employee_one.in_work)
-# print('Уволился', employee_one.out_work)
-#
-# EMP_BONUS_ID = employee_one.bonus_code  # Список бонусов сотрудника
-# EMP_ID = employee_one.id_  # Ищем в контракте id пользователя
-#
-# for contract in Contracts:  # Достаем из контрактов ,контракты сотрудника
-#     if contract['employer_code'] == EMP_ID:  # Если в контракте указан id нашего сотрудника
-#         contract_instance = Contract(contract['id'], contract['employer_code'], contract['data_contract'],
-#                                      contract['sum_contract'])  # Мапим данные в модель
-#
-# if len(EMP_BONUS_ID) > 0:  # Если бонусы существуют
-#     for bonus in Bonuses:  # Идем по списку всех  бонусов
-#         for code in EMP_BONUS_ID:  # Идем по списку бонусов сотрудника
-#             if bonus['id'] == code:  # Если есть совпдаения с бонусом сотрудника вывести весь объект бонуса
-#                 bonus_instance = Bonus(bonus['id'], bonus['bonus_percent'])  # создаем экземпляр класса Bonus
+in_date = datetime.date(2015, 2, 1)  # период расчета бонусов
+out_date = datetime.datetime(2016, 3, 4)  # период расчета бонусов
 local = LocalData()
-print(local.bonuses[0].bonus_percent)
-print(local.employees[0].employer_full_name)
+for employ in local.employees:  # парсим сотрудников
+    print('----------------------------------------------')
+    print("Фио сотрудника:", employ.employer_full_name)
+    print("Бонусы сотрудника:", employ.bonus_code)
+    print("Дата устройства на работу:", employ.in_work)
+    print("Дата увольнения:", employ.out_work)
+
+    """Парсим бонусы для сотрудника"""
+    for bonus_id in employ.bonus_code:
+        for bonus_obj in local.bonuses:
+            if bonus_obj.id_ == bonus_id:
+                print("Объект бонус для конкретного сотрудника:", bonus_obj)
+
+    """Парсим контракты для сотрудника"""
+    for contract in local.contracts:
+        if contract.employer_code == employ.id_:
+            print("Контракт сотрудника:", contract)
