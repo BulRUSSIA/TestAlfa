@@ -6,10 +6,15 @@ import datetime
 
 
 def date_in(date):
-    year, month, day = map(int, date.split('-'))
-    full_date = datetime.date(year, month, day)
+    try:
+        year, month, day = map(int, date.split('-'))
+        full_date = datetime.date(year, month, day)
 
-    return full_date
+        return full_date
+
+    except ValueError:
+        print('Не верный формат даты,введите заново!')
+        main()
 
 
 def main():
