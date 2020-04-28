@@ -33,31 +33,30 @@ class Start:
         in_date = self.date_in(date_entry)  # период расчета бонусов
         out_date = self.date_in(date_end)  # период расчета бонусов
         for employ in local.employees:  # парсим сотрудников
-            if employ.out_work is None or out_date > employ.out_work < in_date or employ.in_work < out_date:
-                for contract in local.contracts:
-                    if contract.employer_code == employ.id_:
-                        self.contract = contract
-                        print("Контракт сотрудника:", self.contract)
+            #if out_date > employ.in_work >= in_date:  # Работал ли сотрудник в заданном промежутке или былуволен
+                for contract in local.contracts:  # Идем по контрактам
+                    if contract.employer_code == employ.id_:  # Если в контрактах находим текущий ид сотрудника
+                        self.contract = contract  # записываем контракт
 
                         """Парсим бонусы для сотрудника"""
+                        for bonus_id in employ.bonus_code:
+                            if bonus_id == 1:
+                                self.total_bonus = self.total_bonus + Bonus_1(self.contract.sum_contract).bonus_sum
 
-                for bonus_id in employ.bonus_code:
-                    if bonus_id == 1:
-                        self.total_bonus = self.total_bonus + Bonus_1(self.contract.sum_contract).bonus_sum
+                            if bonus_id == 2:
+                                self.total_bonus = self.total_bonus + Bonus_2(self.contract.sum_contract).bonus_sum
+                                # if self.total_bonus > self.max_bonus_two:
+                                #     self.total_bonus = self.max_bonus_two
+                            if bonus_id == 3:
+                                self.total_bonus = self.total_bonus + Bonus_3(self.contract.sum_contract,
+                                                                              self.contract.data_contract,
+                                                                              in_date).bonus_sum
 
-                    if bonus_id == 2:
-                        self.total_bonus = self.total_bonus + Bonus_2(self.contract.sum_contract).bonus_sum
-                        if self.total_bonus > self.max_bonus_two:
-                            self.total_bonus = self.max_bonus_two
-                    if bonus_id == 3:
-                        self.total_bonus = self.total_bonus + Bonus_3(self.contract.sum_contract,
-                                                                      self.contract.data_contract,
-                                                                      in_date).bonus_sum
-
-                    if bonus_id == 4:
-                        pass
+                            if bonus_id == 4:
+                                pass
 
                 self.write_employees_bonuses(employ.id_, employ.employer_full_name)
+                print(employ.employer_full_name, self.total_bonus)
 
     def write_employees_bonuses(self, employ_id, full_name):
         EMPLOYEES_LIST.append(

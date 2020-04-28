@@ -28,11 +28,12 @@ class Bonus_3:
     def __init__(self, sum_bonus: int, date_contract, date_in_employ):
         TWO_YEARS_to_DAYS = 730
         PERCENT_BONUS = 7
-        bonus_sum = 0
         BONUS_CONST = float(PERCENT_BONUS / 100)
         if date_contract - date_in_employ > datetime.timedelta(days=TWO_YEARS_to_DAYS):
             self.bonus_sum = sum_bonus * (
                     BONUS_CONST / 100)
+
+        self.bonus_sum = 0
 
 
 class Bonus_4:
