@@ -2,11 +2,18 @@
 # TODO 2)все бонусы суммируются между собой
 # TODO 3)алгоритм расчета бонусов для сотрудника
 from Models.LocalData import LocalData
+from Logic.CalculateBonuses import Bonus_1, Bonus_2, Bonus_3, Bonus_4
 import datetime
+import csv
+
+EMPLOYEES_LIST = []
 
 
 class Start:
     contract = None
+    id_emp = None
+    max_bonus_two = 100000
+    total_bonus = 0
 
     def date_in(self, date):
         try:
@@ -26,46 +33,41 @@ class Start:
         in_date = self.date_in(date_entry)  # период расчета бонусов
         out_date = self.date_in(date_end)  # период расчета бонусов
         for employ in local.employees:  # парсим сотрудников
+            if employ.out_work is None or out_date > employ.out_work < in_date or employ.in_work < out_date:
+                for contract in local.contracts:
+                    if contract.employer_code == employ.id_:
+                        self.contract = contract
+                        print("Контракт сотрудника:", self.contract)
 
-            print('----------------------------------------------')
-            print("Фио сотрудника:", employ.employer_full_name)
-            print("Бонусы сотрудника:", employ.bonus_code)
-            print("Дата устройства на работу:", employ.in_work)
-            print("Дата увольнения:", employ.out_work)
+                        """Парсим бонусы для сотрудника"""
 
-            if employ.out_work is not None and out_date > employ.out_work > in_date or employ.in_work > out_date:  # Если дата увольнения попадает в
-                # период расчета бонусов
-                print('Бонусы не начисляются')
+                for bonus_id in employ.bonus_code:
+                    if bonus_id == 1:
+                        self.total_bonus = self.total_bonus + Bonus_1(self.contract.sum_contract).bonus_sum
 
-            """Парсим контракты для сотрудника"""
-            for contract in local.contracts:
-                if contract.employer_code == employ.id_:
-                    self.contract = contract
-                    print("Контракт сотрудника:", self.contract)
+                    if bonus_id == 2:
+                        self.total_bonus = self.total_bonus + Bonus_2(self.contract.sum_contract).bonus_sum
+                        if self.total_bonus > self.max_bonus_two:
+                            self.total_bonus = self.max_bonus_two
+                    if bonus_id == 3:
+                        self.total_bonus = self.total_bonus + Bonus_3(self.contract.sum_contract,
+                                                                      self.contract.data_contract,
+                                                                      in_date).bonus_sum
 
-            """Парсим бонусы для сотрудника"""
-            for bonus_id in employ.bonus_code:
-                for bonus_obj in local.bonuses:
-                    if bonus_obj.id_ == bonus_id:
-                        print("Объект бонус для конкретного сотрудника:", bonus_obj)
-                        if bonus_obj.id_ == 1:
-                            bonus_1 = self.contract.sum_contract * (bonus_obj.bonus_percent / 100)
-                            print(self.contract.sum_contract)
-                            print(bonus_1)
-                        if bonus_obj.id_ == 2:
-                            bonus_2 = self.contract.sum_contract * (bonus_obj.bonus_percent / 100)
-                            if bonus_2 >= 100000:  # Не более ста тысяч
-                                bonus_2 = 100000
-                            print(self.contract.sum_contract)
-                            print(bonus_2)
+                    if bonus_id == 4:
+                        pass
 
-                        if bonus_obj.id_ == 3:
-                            bonus_3 = self.contract.sum_contract * (
-                                        bonus_obj.bonus_percent / 100)  # Если сотрудник проработал в компании более 2х лет
-                            print(self.contract.sum_contract)
-                            print(bonus_3)
-                        if bonus_obj.id_ == 4:
-                            bonus_4 = employ.base_salary * (bonus_obj.bonus_percent / 100)
+                self.write_employees_bonuses(employ.id_, employ.employer_full_name)
+
+    def write_employees_bonuses(self, employ_id, full_name):
+        EMPLOYEES_LIST.append(
+            {"код": employ_id, "ФИО": full_name, "сумма бонусов": self.total_bonus})
+        with open('Отчет.csv', 'w') as f:
+            writer = csv.DictWriter(
+                f, fieldnames=list(EMPLOYEES_LIST[0].keys()), quoting=csv.QUOTE_NONNUMERIC)
+            writer.writeheader()
+            for d in EMPLOYEES_LIST:
+                writer.writerow(d)
 
 
 if __name__ == '__main__':

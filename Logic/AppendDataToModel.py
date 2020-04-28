@@ -1,7 +1,7 @@
 from Models.Employee import Employee
 from Models.Bonus import Bonus
 from Models.Contract import Contract
-from DataStructures.DataCalculationBonus import Bonuses
+# from DataStructures.DataCalculationBonus import Bonuses
 from DataStructures.DataContracts import Contracts
 from DataStructures.DataEmployees import Employees
 
@@ -16,13 +16,13 @@ class AppendEmployees:
             self.instance_list.append(self.instance_employees)
 
 
-class AppendBonuses:
-    def __init__(self):
-        self.instance_list = []
-        for bonus in Bonuses:
-            self.instance_bonuses = Bonus(bonus['id'], bonus['bonus_percent'])
-
-            self.instance_list.append(self.instance_bonuses)
+# class AppendBonuses:
+#     def __init__(self):
+#         self.instance_list = []
+#         for bonus in Bonuses:
+#             self.instance_bonuses = Bonus(bonus['id'], bonus['bonus_percent'])
+#
+#             self.instance_list.append(self.instance_bonuses)
 
 
 class AppendContracts:
