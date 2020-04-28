@@ -4,9 +4,13 @@
 from Models.LocalData import LocalData
 import datetime
 
+TWO_YEARS = 730
+
 
 class Start:
     contract = None
+    id_emp = None
+    total_bonus = None
 
     def date_in(self, date):
         try:
@@ -60,11 +64,14 @@ class Start:
                             print(bonus_2)
 
                         if bonus_obj.id_ == 3:
-                            bonus_3 = self.contract.sum_contract * (
-                                        bonus_obj.bonus_percent / 100)  # Если сотрудник проработал в компании более 2х лет
-                            print(self.contract.sum_contract)
-                            print(bonus_3)
+                            if self.contract.data_contract - in_date > datetime.timedelta(days=TWO_YEARS):
+                                bonus_3 = self.contract.sum_contract * (
+                                        bonus_obj.bonus_percent / 100)  # Если сотрудник проработал в компании более 2х лет на дату заключения договора
+                                print(self.contract.sum_contract)
+                                print(bonus_3)
+
                         if bonus_obj.id_ == 4:
+
                             bonus_4 = employ.base_salary * (bonus_obj.bonus_percent / 100)
 
 
