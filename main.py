@@ -4,11 +4,12 @@ from Models.LocalData import LocalData
 from Logic.CalculateBonuses import Bonus_1, Bonus_2, Bonus_3, Bonus_4
 from tabulate import tabulate
 
-EMPLOYEES_LIST = []
 
+EMPLOYEES_LIST = []
 
 class EmployeesPr:
     contract = None
+
     max_bonus_two = 100000  # максимальный бонус по 2 коду бонуса
     """сумма по 1,2,3,4"""
     total_bonus_1 = 0
@@ -19,7 +20,6 @@ class EmployeesPr:
     csv_write = False
 
     """Переводим в формат datetime"""
-
     def date_in(self, date):
         try:
             year, month, day = map(int, date.split('-'))
@@ -58,6 +58,7 @@ class EmployeesPr:
         date_end = input('Введите конец периода в формате YYYY-MM-DD:')
         in_date = self.date_in(date_entry)  # период расчета бонусов
         out_date = self.date_in(date_end)  # период расчета бонусов
+
         for employee in local.employees:  # парсим сотрудников
             if employee.out_work is None:
                 employee.out_work = out_date + datetime.timedelta(

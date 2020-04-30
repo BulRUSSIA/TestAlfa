@@ -52,4 +52,3 @@ class Bonus_4:
         overlap = max(0, delta)
         months_job = round(overlap / 31)
         self.bonus_sum = (sum_bonus * BONUS_CONST_PERCENT) * months_job
-
