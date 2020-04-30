@@ -104,7 +104,6 @@ class EmployeesPr:
         if not self.csv_write:
             print(tabulate(data_view.items(),  tablefmt="grid"))
         else:
-            EMPLOYEES_LIST.append(data_view)
             with open('Отчет.csv', 'w', encoding='utf-8') as f:
                 writer = csv.DictWriter(
                     f, fieldnames=list(EMPLOYEES_LIST[0].keys()), quoting=csv.QUOTE_NONNUMERIC)
