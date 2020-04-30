@@ -1,5 +1,7 @@
 # TestAlfa
 TestProject\
+python ver. 3.8\
+0)устанавливаем зависимости из requirements.txt(pip install requirements.txt)\
 1)Запуск main.py\
 2)Выбираем тип вывода отчета\
 3)Задаем период работы
