@@ -3,13 +3,11 @@ import csv
 from Models.LocalData import LocalData
 from Logic.CalculateBonuses import Bonus_1, Bonus_2, Bonus_3, Bonus_4
 from tabulate import tabulate
-
-
 EMPLOYEES_LIST = []
+
 
 class EmployeesPr:
     contract = None
-
     max_bonus_two = 100000  # максимальный бонус по 2 коду бонуса
     """сумма по 1,2,3,4"""
     total_bonus_1 = 0
@@ -24,9 +22,7 @@ class EmployeesPr:
         try:
             year, month, day = map(int, date.split('-'))
             full_date = datetime.date(year, month, day)
-
             return full_date
-
         except ValueError:
             print('Не верный формат даты,введите заново!')
             self.main()
@@ -53,12 +49,10 @@ class EmployeesPr:
         method_read = int(input('Выберите способ для вывода отчета (1)-консоль, (2)-csv файл,в ответ укажите число:'))
         if method_read == 2:
             self.csv_write = True
-
         date_entry = input('Введите начало периода в формате YYYY-MM-DD:')
         date_end = input('Введите конец периода в формате YYYY-MM-DD:')
         in_date = self.date_in(date_entry)  # период расчета бонусов
         out_date = self.date_in(date_end)  # период расчета бонусов
-
         for employee in local.employees:  # парсим сотрудников
             if employee.out_work is None:
                 employee.out_work = out_date + datetime.timedelta(
@@ -87,7 +81,6 @@ class EmployeesPr:
                                 self.total_bonus_3 = self.total_bonus_3 + Bonus_3(self.contract.sum_contract,
                                                                                   self.contract.data_contract,
                                                                                   in_date).bonus_sum
-
                             if bonus_id == 4:
                                 if employee.out_work is not None:
                                     self.total_bonus_4 = self.total_bonus_4 + Bonus_4(employee.base_salary, in_date,
