@@ -53,18 +53,3 @@ class Bonus_4:
         months_job = round(overlap / 31)
         self.bonus_sum = (sum_bonus * BONUS_CONST_PERCENT) * months_job
 
-
-class JobPeriod:
-    """Работали  в данном периоде"""
-
-    def __init__(self, sum_bonus: int, in_date, out_date, in_work, out_work):
-        Range = namedtuple('Range', ['start', 'end'])
-        BONUS_CONST_PERCENT = float(2 / 100)
-        r1 = Range(start=in_date, end=out_date)
-        r2 = Range(start=in_work, end=out_work)
-        latest_start = max(r1.start, r2.start)
-        earliest_end = min(r1.end, r2.end)
-        delta = (earliest_end - latest_start).days + 1
-        overlap = max(0, delta)
-        months_job = round(overlap / 31)
-        self.bonus_sum = (sum_bonus * BONUS_CONST_PERCENT) * months_job
