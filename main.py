@@ -98,7 +98,6 @@ class EmployeesPr:
                 self.write_employees_bonuses(employee.id_, employee.employee_full_name)
 
     """Записываем в csv файл или выводим в консоль"""
-
     def write_employees_bonuses(self, employee_id, full_name):
         data_view = {"код": employee_id, "ФИО": full_name, "сумма бонусов": self.total_bonus_sum}
         EMPLOYEES_LIST.append(data_view)
