@@ -9,17 +9,25 @@ from DataStructures.DataEmployees import Employees
 class AppendEmployees:
     def __init__(self):
         self.instance_list = []
-        for employee in Employees:
-            self.instance_employees = Employee(employee['id'], employee['employee_full_name'], employee['in_work'],
-                                               employee['out_work'], employee['bonus_code'], employee['base_salary'])
-
-            self.instance_list.append(self.instance_employees)
+        list(map(lambda employee:
+                 self.instance_list.append(
+                     Employee
+                     (employee['id'],
+                      employee['employee_full_name'],
+                      employee['in_work'],
+                      employee['out_work'],
+                      employee['bonus_code'],
+                      employee['base_salary'])),
+                 Employees))
 
 
 class AppendContracts:
     def __init__(self):
         self.instance_list = []
-        for contract in Contracts:
-            self.instance_contracts = Contract(contract['id'], contract['employee_code'], contract['data_contract'],
-                                               contract['sum_contract'])
-            self.instance_list.append(self.instance_contracts)
+        list(map(lambda contract:
+                 self.instance_list.append(
+                     Contract(contract['id'],
+                              contract['employee_code'],
+                              contract['data_contract'],
+                              contract['sum_contract'])),
+                 Contracts))
